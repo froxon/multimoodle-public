@@ -1,0 +1,9 @@
+certbot
+haproxy
+mariadb
+docker-compose.yml*
+moodle-*
+moodledata-*
+# Aquí se almacenan las rutas y contraseñas:
+config
+*sql

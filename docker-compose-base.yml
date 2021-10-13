@@ -1,0 +1,33 @@
+version: '3'
+# OJO CAMBIAR /root/multimoodle por lo que sea
+services:
+
+  diagnose: # esto tiene al menos ping y wget
+    image: nickytd/utils
+    command: echo "Ahora vamos a arrancar un comando que dure mucho ;-)" 
+    command: tail -f /dev/null
+
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.5
+    environment:
+      - MARIADB_ROOT_PASSWORD=# MARIADB_PWD
+      - MARIADB_CHARACTER_SET=utf8mb4
+      - MARIADB_COLLATE=utf8mb4_unicode_ci
+    volumes:
+      - '/root/multimoodle/mariadb:/bitnami/mariadb'
+    expose:
+      - 3306
+
+  proxy:
+    image: haproxy
+    volumes:
+      - /root/multimoodle/haproxy:/usr/local/etc/haproxy # Configuración
+    ports:
+#      - "80:80"
+      - "443:443"
+    depends_on:
+      - mariadb
+      # DEPENDLIST (no eliminar este comentario)
+
+  # MOODLELIST
+

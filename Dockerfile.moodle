@@ -1,0 +1,12 @@
+FROM bitnami/moodle
+## Put your customizations below
+
+## Change user to perform privileged actions
+#USER 0
+## Install 'vim'
+RUN apt-get update && apt-get upgrade
+RUN apt-get install nano
+RUN apt-get install locales-all
+
+## Revert to the original non-root user
+#USER 1

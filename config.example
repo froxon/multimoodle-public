@@ -1,0 +1,4 @@
+BASE="/root/multimoodle" # La carpeta base sin "/" al final
+MARIADB_PWD="unaclavedificil" # Clave de root de mariadb
+MOODLE_PWD_DATABASE="unprefijodeclave" # prefijo para claves de acceso a base de datos de moodle
+MOODLE_PWD_USER="unprefijodeclave" # prefijo para claves de acceso al propio moodle (la clave de admin)
