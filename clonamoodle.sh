@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Carga entorno de ejecución, que debe tener al menos las variables: BASE, MARIADB_PWD, MOODLE_PWD_DATABASE
+[[ ! -f ./config ]] && { echo "No hay fichero de configuración" ;exit;}
+# Carga entorno de ejecución, que debe tener al menos las variables: BASE, MARIADB_PWD, MOODLE_PWD_DATABASE, MOODLE_PWD_USER
 . ./config 
 
 BASE=${BASE//\//\\\/} # sustituir todas las ocurrencias (// en lugar de /) para que funcione en SED

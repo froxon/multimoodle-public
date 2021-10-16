@@ -2,8 +2,10 @@
 Creación dinámica de sucesivos "moodles" configurados sobre la misma base de datos mariadb, todos ellos detrás de un HAProxy (reparto de carga, proxy inverso SSL)
 La idea es: llegar, instalar docker, bajar 10 ficheros de github, hacer una mínima configuración y ejecutar un script que vaya construyendo la configuración.
 
-**Prerrequisitos**: docker instalado. Todo lo demás se instala dinámicamente mediante contenedores estándar
+**Prerrequisitos**: docker *y docker-compose* instalado. Puertos 80 y 443 abiertos a la máquina en el firewall. Todo lo demás se instala dinámicamente mediante contenedores estándar. En ubuntu lo hicimos con https://docs.docker.com/engine/install/ubuntu/ 
+
 **Advertencia**: usar mariadb en un contenedor puede no dar el rendimiento esperado... sería trivial modificar esto para que usara una base de datos en otro host o fuera del contenedor.
+
 **Componentes:**
 * config: configuración de la carpeta base del multimoodle y varias claves (ver más abajo). *Para no almacenar contraseñas en github, hay un config.example sin datos, que puede renombrarse*
 * creadmoodle.sh - Pide un nombre de dominio y añade al multimoodle existente un nuevo moodle que atiende ahí por SSL.
@@ -18,9 +20,9 @@ La idea es: llegar, instalar docker, bajar 10 ficheros de github, hacer una mín
 ## Configuración inicial
 * Instalar docker en el host.
 * Crear una carpeta específica "multimoodle"
-* Dentro de esa carpeta, hacer `git clone https://github.com/froxon/multimoodle-public.git`
-* Renombrar config.example a config y ajustar las variables de configuración
-    * BASE: la carpeta que hemoscreado, por ejemplo "/root/multimoodle"
+* Dentro de esa carpeta, hacer `git clone https://github.com/froxon/multimoodle-public.git .`
+* Renombrar **MUY IMPORTANTE** config.example a config y ajustar las variables de configuración
+    * BASE: la carpeta que hemos creado, por ejemplo "/root/multimoodle"
     * MARIADB_PWD una clave no especialmente fácil para el acceso root a la base de datos. La base de datos no es visible, pero... está bien que tenga una clave no trivial.
     * MOODLE_PWD_DATABASE: el prefijo por el que van a empezar todas las claves de acceso a la base de datos para el moodle. Por ejemplo, si aquí ponemos "#x98y", para un moodle en subdominio.ejemplo.com la clave de acceso a la base de datos será "#x98y_subdominio". **No es algo que vaya a verse desde fuera**
     * MOODLE_PWD_USER: el prefijo por el que van a empezar todas las claves de acceso al moodle. Por ejemplo, si aquí ponemos "ref!!23", para un moodle en subdominio.ejemplo.com la clave de acceso a la base de datos será "ref!!23_subdominio". **Esto sí se ve desde fuera, pero se puede cambiar luego**
