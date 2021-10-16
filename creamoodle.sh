@@ -112,7 +112,7 @@ cat << EOF
       - MOODLE_DATABASE_USER=u_$prefijo
       - MOODLE_DATABASE_NAME=$prefijo
       - MOODLE_USERNAME=admin_$prefijo
-      - MOODLE_PASSWORD=pw33_$prefijo
+      - MOODLE_PASSWORD=$MOODLE_PWD_USER_$prefijo
       - MOODLE_SITE_NAME='$prefijo MOOC'
       - MOODLE_DATABASE_PASSWORD=${MOODLE_PWD_DATABASE}_$prefijo
     volumes:
