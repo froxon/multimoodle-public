@@ -56,7 +56,9 @@ fi
 
 
 # 2. Creación del certificado
+docker stop multimoodle_proxy_1
 ./certbot/certbot.sh
+docker start multimoodle_proxy_1
 read -p "Si hubo algún error, pulsa <Ctrl>-C para interrumpir. <ENTER> para continuar" espera
 # Recogemos el certificado y la clave privada y los unimos en la carpeta del proxy
 cat "./certbot/etc-letsencrypt/live/$dominio/fullchain.pem" "./certbot/etc-letsencrypt/live/$dominio/privkey.pem" > "./haproxy/$prefijo.pem"
@@ -112,7 +114,7 @@ cat << EOF
       - MOODLE_DATABASE_USER=u_$prefijo
       - MOODLE_DATABASE_NAME=$prefijo
       - MOODLE_USERNAME=admin_$prefijo
-      - MOODLE_PASSWORD=$MOODLE_PWD_USER_$prefijo
+      - MOODLE_PASSWORD=${MOODLE_PWD_USER}_$prefijo
       - MOODLE_SITE_NAME='$prefijo MOOC'
       - MOODLE_DATABASE_PASSWORD=${MOODLE_PWD_DATABASE}_$prefijo
     volumes:

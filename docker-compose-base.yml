@@ -23,7 +23,7 @@ services:
     volumes:
       - /root/multimoodle/haproxy:/usr/local/etc/haproxy # Configuración
     ports:
-#      - "80:80"
+      - "80:80"
       - "443:443"
     depends_on:
       - mariadb
