@@ -9,7 +9,7 @@ cd "${0%/*}" # change dir to script folder
 # Carga entorno de ejecución, que debe tener al menos las variables: BASE, MARIADB_PWD, MOODLE_PWD_DATABASE, MOODLE_PWD_USER
 . ./config 
 
-if [ $(date +%d) -eq 04 ]; # Monthly backup each first day of month
+if [ $(date +%d) -eq 04 ]; # Monthly backup on first day of month
 then
     period=monthly
 elif [ $(date +%u) -eq 01 ]; # Weekly backup each monday
