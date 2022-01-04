@@ -1,0 +1,41 @@
+#!/usr/bin/expect -f
+
+# Unlike shell scripts, $argv 0 is first parameter, not shellscript name
+set BASE [lindex $argv 0] 
+set EMAIL [lindex $argv 1]
+set DOMAIN [lindex $argv 2]
+
+# This is better: 
+set force_conservative 0  ;# set to 1 to force conservative mode even if
+			  ;# script wasn't run conservatively originally
+if {$force_conservative} {
+	set send_slow {1 .1}
+	proc send {ignore arg} {
+		sleep .1
+		exp_send -s -- $arg
+	}
+}
+set timeout -1
+
+# Begin the action:
+spawn docker run -it --rm --name certbot -v $BASE/certbot/etc-letsencrypt:/etc/letsencrypt -v $BASE/certbot/var-lib-letsencrypt:/var/lib/letsencrypt -p 80:80 certbot/certbot certonly
+expect -exact "Select the appropriate number \[1-2\] then \[enter\] (press 'c' to cancel): "
+send -- "1\r"
+
+expect {
+    # exp_continue means "also try to match next expression"
+    "Enter email address*(Enter 'c' to cancel): " { 
+        send -- "$EMAIL\r"
+        expect "(Y)es/(N)o:*"; send -- "y\r" # Terms of service
+        expect "(Y)es/(N)o:*"; send -- "n\r" # Share with EFF
+        exp_continue 
+    } 
+    "*space separated) (Enter 'c' to cancel): " { send -- "$DOMAIN\r" }
+
+}
+expect {
+    "*2: Renew*Select the appropriate number*" {send -- "2\r";exp_continue}
+    eof
+}
+
+
