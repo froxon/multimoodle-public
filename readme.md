@@ -11,6 +11,7 @@ La idea es: llegar, instalar docker, bajar 10 ficheros de github, hacer una mín
 * creadmoodle.sh - Pide un nombre de dominio y añade al multimoodle existente un nuevo moodle que atiende ahí por SSL.
 * clonamoodle.sh - Toma como parámetro el "prefijo" (de un dominio "prefijo.ejemplo.com") ya existente en el multimoodle y un nuevo dominio y "clona" otro moodle exacto que ahora atiende en el nuevo dominio.
 * borratodo.sh   - borra todos el multimoodle (usar con cuidado ;-)
+* actualizacerts.sh / actualizacerts.expect - actualiza los certificados a los que les falta poco (14 días por defecto) para caducar, automatizando con **expect** la entrada/salida de certbot.
 * Dockerfile.moodle - pequeñas modificaciones a la imagen docker de bitnami para moodle.
 * Ficheros de configuración que los scripts instalan luego en su sitio y manipulan para añadir nuevos componentes al multimoodle:
     * certbot.base.sh: script para arrancar certbot (un contenedor que encapsula la descarga de certificados de letsencrypt.org). La primera vez que se ejcuta creamoodle.sh, se copia a la carpeta certbot como certbot.sh
